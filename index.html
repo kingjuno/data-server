@@ -1,36 +1,271 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geo's DB</title>
+    <style>
+        body {
+            font-family: "MS Gothic", "Osaka-mono", monospace;
+            background-color: #f8f8f8;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            line-height: 1.4;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 20px;
+            text-align: center;
+            border-bottom: 3px solid #666;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .cluster-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .cluster {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            transition: all 0.2s ease;
+        }
+
+        .cluster:hover {
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .cluster h3 {
+            margin-top: 0;
+            padding-bottom: 5px;
+            border-bottom: 2px dotted #ddd;
+            font-size: 16px;
+        }
+
+        .file-list {
+            list-style-type: none;
+            padding-left: 0;
+            margin: 0;
+        }
+
+        .file-list li {
+            margin-bottom: 5px;
+            font-size: 13px;
+            line-height: 1.3;
+        }
+
+        .file-list li a {
+            color: #0066cc;
+            text-decoration: none;
+            display: block;
+            padding: 4px 6px;
+            background-color: #f8f8f8;
+            border-radius: 3px;
+            transition: all 0.1s ease;
+            border-left: 3px solid transparent;
+        }
+
+        .file-list li a:hover {
+            background-color: #e6f0ff;
+            border-left: 3px solid #0066cc;
+            padding-left: 8px;
+        }
+
+        .file-list li a::before {
+            content: "📄 ";
+            margin-right: 5px;
+        }
+
+        .category-nav {
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: #eee;
+            text-align: center;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .category-nav a {
+            display: inline-block;
+            padding: 5px 10px;
+            color: #333;
+            text-decoration: none;
+            margin: 0 5px;
+            border-radius: 3px;
+        }
+
+        .category-nav a:hover {
+            background-color: #ddd;
+        }
+
+        .file-count {
+            font-size: 11px;
+            color: #777;
+            margin-left: 5px;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            padding: 10px;
+            color: #777;
+            font-size: 12px;
+            border-top: 1px solid #ddd;
+        }
+
+        @media (max-width: 768px) {
+            .cluster-container {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+
+            .header-icon {
+                width: 48%;
+            }
+        }
+
+        .header-icon {
+            width: 48%;
+            max-width: 50px;
+            height: auto;
+            vertical-align: middle;
+            margin-right: 10px;
+        }
+    </style>
 </head>
 
 <body>
-    <a href="https://kingjuno.github.io">Juno</a> > <a href="/data-server/">Datas</a><br><br>
-    last updated: <span style="color:red">Apr. 18 2024</span>
-    <br>
-    ---------------------------------------------
-    <br>Available data:
-    <h3 style="margin: 0;"><a href="/data-server/files/go_dataset/go.html">Go</a></h3>
-    &nbsp;&nbsp;> 9x9
-    <br>&nbsp;&nbsp;> 13x13
-    <br>&nbsp;&nbsp;> 5x5 (coming soon)
-    <br><br>
-    <h3 style="margin: 0;"><a href="/data-server/files/clidoro/clidoro.html">Clidoro assets</a></h3>
-    &nbsp;&nbsp;> Notification sounds
-    <br><br>
-    <pre>
-    _))
-    > *\     _~
-    `;'\\__-' \_
-       | )  _ \ \  
-      / / ``   w w
-     w w
-</pre>
-    <style>
-        a,
-        a:link {
-            color: blue;
+    <header>
+        <h1>
+            <img src="ico.png" alt="ico" class="header-icon">
+            Geo's DB <span style="white-space: nowrap;">(数据库)</span>
+        </h1>
+        <p>Bunch of useful files.</p>
+    </header>
+
+    <div class="container">
+        <div class="category-nav" id="category-nav">
+            <!-- Category links will be generated here -->
+        </div>
+
+        <div class="cluster-container" id="cluster-container">
+            <!-- Clusters will be generated here -->
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2025 Geo's DB | Last updated: March 21, 2025</p>
+    </footer>
+
+    <script>
+        // File data structure as a list of dictionaries
+        const files = [
+            { name: "Go 9x9 (8607) games", categories: ["Baduk", "Go Games"], path: "/data-server/files/go_dataset/go9.tgz" },
+            { name: "Go 13x13 (9410) games", categories: ["Baduk", "Go Games"], path: "/data-server/files/go_dataset/go13.tgz" },
+            { name: "Go 9x9 (49895) games", categories: ["Baduk", "Go Games"], path: "/data-server/files/go_dataset/go9-large.tgz" },
+            { name: "Go 13x13 (44881) games", categories: ["Baduk", "Go Games"], path: "/data-server/files/go_dataset/go13-large.tgz" },
+            { name: "Simple Notification", categories: ["Clidoro"], path: "/data-server/files/clidoro/simple-notification.mp3" },
+            { name: "Get Strong at Attacking.zip", categories: ["Baduk", "Tsumego"], path: "/data-server/files/go_dataset/Get strong at attaking.zip" },
+            { name: "Get Strong at Handicap GO.zip", categories: ["Baduk", "Tsumego"], path: "/data-server/files/go_dataset/Get strong at handicap Go.zip" },
+            { name: "Get Strong at Invading.zip", categories: ["Baduk", "Tsumego"], path: "/data-server/files/go_dataset/Get strong at invading.zip" },
+            { name: "Get Strong at the Opening.zip", categories: ["Baduk", "Tsumego"], path: "/data-server/files/go_dataset/Get strong at the opening.zip" },
+            { name: "Sabaki.zip", categories: ["Baduk", "Tsumego"], path: "/data-server/files/sabaki/Sabaki.zip" },
+        ];
+
+        // Generate category navigation dynamically
+        const categories = [...new Set(files.flatMap(file => file.categories))];
+        const categoryNav = document.getElementById('category-nav');
+        categories.forEach(category => {
+            const link = document.createElement('a');
+            link.href = `#${category.toLowerCase()}`;
+            link.textContent = category;
+            link.dataset.category = category;
+            categoryNav.appendChild(link);
+        });
+
+        // Function to generate clusters for a category
+        function generateClusters(category) {
+            const clusterContainer = document.getElementById('cluster-container');
+            clusterContainer.innerHTML = ''; // Clear existing clusters
+
+            // Create a header for the category
+            const categoryHeader = document.createElement('h2');
+            categoryHeader.textContent = category;
+            categoryHeader.id = category.toLowerCase();
+            categoryHeader.style.gridColumn = '1 / -1';
+            categoryHeader.style.marginTop = '10px';
+            categoryHeader.style.marginBottom = '15px';
+            categoryHeader.style.paddingBottom = '5px';
+            categoryHeader.style.borderBottom = '2px solid #333';
+            clusterContainer.appendChild(categoryHeader);
+
+            // Group files by subcategories or default to "General"
+            const subcategories = [...new Set(files
+                .filter(file => file.categories.includes(category))
+                .map(file => file.categories[1] || "General"))];
+
+            subcategories.forEach(subcategory => {
+                const clusterDiv = document.createElement('div');
+                clusterDiv.className = 'cluster';
+
+                const clusterTitle = document.createElement('h3');
+                clusterTitle.textContent = subcategory;
+
+                const fileList = document.createElement('ul');
+                fileList.className = 'file-list';
+
+                files.filter(file => file.categories.includes(category) && (file.categories[1] === subcategory || (!file.categories[1] && subcategory === "General")))
+                    .forEach(file => {
+                        const listItem = document.createElement('li');
+                        const link = document.createElement('a');
+                        link.href = file.path;
+                        link.textContent = file.name;
+                        listItem.appendChild(link);
+                        fileList.appendChild(listItem);
+                    });
+
+                clusterDiv.appendChild(clusterTitle);
+                clusterDiv.appendChild(fileList);
+                clusterContainer.appendChild(clusterDiv);
+            });
         }
-    </style>
+
+        // Show the first category by default
+        generateClusters(categories[0]);
+
+        // Add event listeners to category navigation
+        const categoryLinks = document.querySelectorAll('.category-nav a');
+        categoryLinks.forEach(link => {
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+                const selectedCategory = this.dataset.category;
+
+                // Highlight the selected category
+                categoryLinks.forEach(l => l.style.fontWeight = 'normal');
+                this.style.fontWeight = 'bold';
+
+                // Generate clusters for the selected category
+                generateClusters(selectedCategory);
+            });
+        });
+
+        // Highlight the first category by default
+        categoryLinks[0].style.fontWeight = 'bold';
+    </script>
 </body>
 
 </html>
