@@ -12,7 +12,8 @@
             box-sizing: border-box;
         }
 
-        html, body {
+        html,
+        body {
             height: 100%;
             display: flex;
             flex-direction: column;
@@ -26,14 +27,85 @@
             overflow-x: hidden;
         }
 
-        header {
-            background-color: #333;
-            color: #fff;
-            padding: 10px 20px;
-            text-align: center;
-            border-bottom: 3px solid #666;
+        
+
+         header {
+        background-color: #333;
+        color: #fff;
+        padding: 10px 20px;
+        border-bottom: 3px solid #666;
+    }
+
+    .header-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    /* Empty div to balance the layout */
+    .spacer {
+        flex: 1;
+        visibility: hidden;
+    }
+
+    .title-container {
+        text-align: center;
+        flex: 2;
+    }
+
+    #search-input {
+        padding: 10px;
+        width: 100%;
+        max-width: 350px; /* Increased max width */
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        border-radius: 5px;
+        outline: none; /* Remove outline on focus */
+        background: rgba(255, 255, 255, 0.2);
+        color: #333;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        transition: all 0.3s ease;
+    }
+
+    #search-input::placeholder {
+        color: rgba(51, 51, 51, 0.7);
+    }
+
+    #search-input:focus {
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        background: rgba(255, 255, 255, 0.4);
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .header-icon {
+        width: 50px;
+        height: auto;
+        vertical-align: middle;
+        margin-right: 10px;
+    }
+
+    /* Media query for mobile devices */
+    @media (max-width: 768px) {
+        .header-content {
+            flex-direction: column;
         }
 
+        .spacer {
+            display: none;
+        }
+
+        .title-container, .search-container {
+            width: 100%;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .search-container {
+            margin-top: 15px;
+        }
+    }
         .container {
             max-width: 1200px;
             margin: 0 auto;
@@ -47,21 +119,6 @@
             flex-wrap: wrap;
             gap: 20px;
             margin-top: 20px;
-        }
-
-        @media (max-width: 768px) {
-            .cluster-container {
-                flex-direction: column;
-            }
-
-            .cluster {
-                width: 100%;
-                max-width: 100%;
-            }
-
-            .header-icon {
-                width: 48%;
-            }
         }
 
         .category-section {
@@ -89,6 +146,8 @@
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
             transition: all 0.2s ease;
             overflow-wrap: break-word;
+            max-height: 300px; /* Added max height */
+            overflow-y: auto; /* Enable vertical scrolling */
         }
 
         .cluster:hover {
@@ -179,7 +238,22 @@
             margin-top: auto;
         }
 
+        /* Media query for mobile devices */
         @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+            }
+
+            .title-container, .search-container {
+                width: 100%;
+                justify-content: center;
+                text-align: center;
+            }
+
+            .search-container {
+                margin-top: 15px;
+            }
+            
             .subcategories-container {
                 display: flex;
                 flex-wrap: wrap;
@@ -193,32 +267,38 @@
                 margin: 0;
             }
 
-            .header-icon {
-                width: 48%;
+            .cluster-container {
+                flex-direction: column;
             }
-        }
 
-        .header-icon {
-            width: 48%;
-            max-width: 50px;
-            height: auto;
-            vertical-align: middle;
-            margin-right: 10px;
+            .cluster {
+                width: 100%;
+                max-width: 100%;
+            }
         }
     </style>
 </head>
 
 <body>
     <header>
-        <h1>
-            <img src="ico.png" alt="ico" class="header-icon">
-            Geo's DB <span style="white-space: nowrap;">(数据库)</span>
-        </h1>
-        <p>Bunch of useful files.</p>
+        <div class="header-content" style="justify-content: center;">
+            <div class="title-container" style="text-align: center;">
+                <h1>
+                    <img src="ico.png" alt="ico" class="header-icon">
+                    Geo's DB <span style="white-space: nowrap;">(数据库)</span>
+                </h1>
+                <p>Bunch of useful files.</p>
+                <p><a href="https://kingjuno.github.io" target="_blank" style="color: #fff; text-decoration: underline;">Visit my Main Website</a></p>
+            </div>
+        </div>
     </header>
 
     <div class="container">
         <div class="category-nav" id="category-nav">
+        </div>
+
+        <div class="search-container" style="text-align: center; margin-top: 15px;">
+            <input type="text" id="search-input" placeholder="Search for files..." style="padding: 10px; width: 100%; max-width: 350px; border: 1px solid #ddd; border-radius: 5px; outline: none;">
         </div>
 
         <div class="cluster-container" id="cluster-container">
@@ -226,30 +306,57 @@
     </div>
 
     <footer>
-        <p>© 2025 Geo's DB | Last updated: March 21, 2025</p>
-        <p>If you have anything to contribute, please submit a PR to my <a href="https://github.com/kingjuno/data-server" target="_blank">GitHub repo</a>.</p>
+        <p>© 2025 Geo's DB | Last updated: March 22, 2025</p>
+        <p>If you have anything to contribute, please submit a PR to my <a
+                href="https://github.com/kingjuno/data-server" target="_blank">GitHub repo</a>.</p>
     </footer>
 
     <script>
+        const baseurl = '/files';
         const files = [
-            { name: "Go 9x9 (8607) games", categories: ["Baduk", "Go Games"], path: "/data-server/files/go_dataset/go9.tgz" },
-            { name: "Go 13x13 (9410) games", categories: ["Baduk", "Go Games"], path: "/data-server/files/go_dataset/go13.tgz" },
-            { name: "Go 9x9 (49895) games", categories: ["Baduk", "Go Games"], path: "/data-server/files/go_dataset/go9-large.tgz" },
-            { name: "Go 13x13 (44881) games", categories: ["Baduk", "Go Games"], path: "/data-server/files/go_dataset/go13-large.tgz" },
-            { name: "Simple Notification", categories: ["Clidoro"], path: "/data-server/files/clidoro/simple-notification.mp3" },
-            { name: "Get Strong at Attacking.zip", categories: ["Baduk", "Tsumego"], path: "/data-server/files/go_dataset/Get strong at attaking.zip" },
-            { name: "Get Strong at Handicap GO.zip", categories: ["Baduk", "Tsumego"], path: "/data-server/files/go_dataset/Get strong at handicap Go.zip" },
-            { name: "Get Strong at Invading.zip", categories: ["Baduk", "Tsumego"], path: "/data-server/files/go_dataset/Get strong at invading.zip" },
-            { name: "Get Strong at the Opening.zip", categories: ["Baduk", "Tsumego"], path: "/data-server/files/go_dataset/Get strong at the opening.zip" },
-            { name: "Sabaki.zip", categories: ["Baduk", "Tsumego"], path: "/data-server/files/sabaki/Sabaki.zip" },
+            { "name": "Go 9x9 (8607) games", "categories": ["Baduk", "Go Games"], "path": baseurl+"/go_dataset/go9.tgz" },
+            { "name": "Go 13x13 (9410) games", "categories": ["Baduk", "Go Games"], "path": baseurl+"/go_dataset/go13.tgz" },
+            { "name": "Go 9x9 (49895) games", "categories": ["Baduk", "Go Games"], "path": baseurl+"/go_dataset/go9-large.tgz" },
+            { "name": "Go 13x13 (44881) games", "categories": ["Baduk", "Go Games"], "path": baseurl+"/go_dataset/go13-large.tgz" },
+            { "name": "Simple Notification", "categories": ["Clidoro"], "path": baseurl+"/clidoro/simple-notification.mp3" },
+            { "name": "Get Strong at Attacking", "categories": ["Baduk", "Tsumego"], "path": baseurl+"/go_dataset/Get strong at attaking.zip" },
+            { "name": "Get Strong at Handicap GO", "categories": ["Baduk", "Tsumego"], "path": baseurl+"/go_dataset/Get strong at handicap Go.zip" },
+            { "name": "Get Strong at Invading", "categories": ["Baduk", "Tsumego"], "path": baseurl+"/go_dataset/Get strong at invading.zip" },
+            { "name": "Get Strong at the Opening", "categories": ["Baduk", "Tsumego"], "path": baseurl+"/go_dataset/Get strong at the opening.zip" },
+            { "name": "Sabaki", "categories": ["Baduk", "Tsumego"], "path": baseurl+"/sabaki/Sabaki.zip" },
+            { "name": "CHO CHIKUN Encyclopedia Life And Death - Intermediate", "categories": ["Baduk", "Tsumego"], "path": baseurl+"/go_dataset/CHO CHIKUN Encyclopedia Life And Death - Intermediate.rar" },
+            { "name": "SATO SUNAO - FLEXIBLE TSUMEGO", "categories": ["Baduk", "Tsumego"], "path": baseurl+"/go_dataset/SATO SUNAO - FLEXIBLE TSUMEGO.rar" },
+            { "name": "SABAKI - ELEMENTARY", "categories": ["Baduk", "Tsumego"], "path": baseurl+"/go_dataset/SABAKI - ELEMENTARY.rar" },
+            { "name": "FUJISAWA SHUUKO - A Collection of Original Tsumego Masterpiece", "categories": ["Baduk", "Tsumego"], "path": baseurl+"/go_dataset/FUJISAWA SHUUKO - A Collection of Original Tsumego Masterpiece.rar" },
+            { "name": "TSUMEGO CLASSIC - GENRAN", "categories": ["Baduk", "Tsumego"], "path": baseurl+"/go_dataset/TSUMEGO CLASSIC - GENRAN.rar" },
+            { "name": "SEMEAI - INTERMEDIATE", "categories": ["Baduk", "Tsumego"], "path": baseurl+"/go_dataset/SEMEAI - INTERMEDIATE.rar" },
+            { "name": "GO SEIGEN Evil Moves Tsumego", "categories": ["Baduk", "Tsumego"], "path": baseurl+"/go_dataset/GO SEIGEN Evil Moves Tsumego.rar" },
+            { "name": "YAMADA KIMIO Interesting Tsumego Dojo", "categories": ["Baduk", "Tsumego"], "path": baseurl+"/go_dataset/YAMADA KIMIO Interesting Tsumego Dojo.rar" },
+            { "name": "GO GAME GURU TSUMEGO SELECTIONS", "categories": ["Baduk", "Tsumego"], "path": baseurl+"/go_dataset/GO GAME GURU TSUMEGO SELECTIONS.rar" },
+            { "name": "GO SEIGEN TSUMEGO DOJO VOL 1", "categories": ["Baduk", "Tsumego"], "path": baseurl+"/go_dataset/GO SEIGEN TSUMEGO DOJO VOL 1.rar" },
+            { "name": "ATTACK - ELEMENTARY", "categories": ["Baduk", "Tsumego"], "path": baseurl+"/go_dataset/ATTACK - ELEMENTARY.rar" },
+            { "name": "TSUMEGO BASIC 150 SELECTED PROBLEMS", "categories": ["Baduk", "Tsumego"], "path": baseurl+"/go_dataset/TSUMEGO BASIC 150 SELECTED PROBLEMS.rar" },
+            { "name": "ISHIDA YOSHIO - 3Dan Tsumego Challenge", "categories": ["Baduk", "Tsumego"], "path": baseurl+"/go_dataset/ISHIDA YOSHIO - 3Dan Tsumego Challenge.rar" },
+            { "name": "ATTACK - PRO", "categories": ["Baduk", "Tsumego"], "path": baseurl+"/go_dataset/ATTACK - PRO.rar" },
+            { "name": "Ishigure Ikuro 123 BASIC TSUMEGO", "categories": ["Baduk", "Tsumego"], "path": baseurl+"/go_dataset/Ishigure Ikuro 123 BASIC TSUMEGO.rar" },
+            { "name": "CAPTURING STONE - ELEMENTARY", "categories": ["Baduk", "Tsumego"], "path": baseurl+"/go_dataset/CAPTURING STONE - ELEMENTARY.rar" },
+            { "name": "MAKING SHAPE TESUJI", "categories": ["Baduk", "Tsumego"], "path": baseurl+"/go_dataset/MAKING SHAPE TESUJI.rar" },
+            { "name": "KADA KATSUJI Tsumego Class", "categories": ["Baduk", "Tsumego"], "path": baseurl+"/go_dataset/KADA KATSUJI Tsumego Class.rar" },
+            { "name": "CAPTURING STONE - PRO", "categories": ["Baduk", "Tsumego"], "path": baseurl+"/go_dataset/CAPTURING STONE - PRO.rar" },
+            { "name": "CHO CHIKUN Encyclopedia Life And Death - Elementary", "categories": ["Baduk", "Tsumego"], "path": baseurl+"/go_dataset/CHO CHIKUN Encyclopedia Life And Death - Elementary.rar" },
+            { "name": "Kano Yoshinori - 239 Graded Go Problems", "categories": ["Baduk", "Tsumego"], "path": baseurl+"/go_dataset/Kano Yoshinori - 239 Graded Go Problems.rar" },
+            { "name": "DEFENSE - ELEMENTARY", "categories": ["Baduk", "Tsumego"], "path": baseurl+"/go_dataset/DEFENSE - ELEMENTARY.rar" },
+            { "name": "MAEDA NOBUAKI Newly Selected Tsumego 100 Problems for 1-8k", "categories": ["Baduk", "Tsumego"], "path": baseurl+"/go_dataset/MAEDA NOBUAKI Newly Selected Tsumego 100 Problems for 1-8k.rar" },
+            { "name": "END GAME - ELEMENTARY", "categories": ["Baduk", "Tsumego"], "path": baseurl+"/go_dataset/END GAME - ELEMENTARY.rar" }
         ];
 
         const categories = [...new Set(files.flatMap(file => file.categories))];
         const categoryNav = document.getElementById('category-nav');
         categories.forEach(category => {
+            const fileCount = files.filter(file => file.categories.includes(category)).length; // Count files in the category
             const link = document.createElement('a');
             link.href = `#${category.toLowerCase()}`;
-            link.textContent = category;
+            link.textContent = `${category} (${fileCount})`; // Add file count dynamically
             link.dataset.category = category;
             categoryNav.appendChild(link);
         });
@@ -260,9 +367,10 @@
 
             const categorySection = document.createElement('div');
             categorySection.className = 'category-section';
-            
+
+            const fileCount = files.filter(file => file.categories.includes(category)).length; // Count files in the category
             const categoryHeader = document.createElement('h2');
-            categoryHeader.textContent = category;
+            categoryHeader.textContent = `${category} (${fileCount})`; // Add file count dynamically
             categoryHeader.id = category.toLowerCase();
             categoryHeader.className = 'category-header';
             categorySection.appendChild(categoryHeader);
@@ -330,6 +438,47 @@
         });
 
         categoryLinks[0].style.fontWeight = 'bold';
+
+        const searchInput = document.getElementById('search-input');
+        searchInput.addEventListener('input', function () {
+            const query = this.value.toLowerCase();
+            const clusterContainer = document.getElementById('cluster-container');
+            clusterContainer.innerHTML = '';
+
+            if (query.trim() === '') {
+                generateClusters(categories[0]);
+                return;
+            }
+
+            const matchingFiles = files.filter(file => file.name.toLowerCase().includes(query));
+            if (matchingFiles.length === 0) {
+                clusterContainer.innerHTML = '<p style="text-align: center; color: #777;">No files found.</p>';
+                return;
+            }
+
+            const searchResultsSection = document.createElement('div');
+            searchResultsSection.className = 'category-section';
+
+            const searchResultsHeader = document.createElement('h2');
+            searchResultsHeader.textContent = 'Search Results';
+            searchResultsHeader.className = 'category-header';
+            searchResultsSection.appendChild(searchResultsHeader);
+
+            const fileList = document.createElement('ul');
+            fileList.className = 'file-list';
+
+            matchingFiles.forEach(file => {
+                const listItem = document.createElement('li');
+                const link = document.createElement('a');
+                link.href = file.path;
+                link.textContent = file.name;
+                listItem.appendChild(link);
+                fileList.appendChild(listItem);
+            });
+
+            searchResultsSection.appendChild(fileList);
+            clusterContainer.appendChild(searchResultsSection);
+        });
     </script>
 </body>
 
